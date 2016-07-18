@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>HiPages - Part 1</title>
+		<link rel="stylesheet" href="build/styles1.min.css" type="text/css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+	</head>
+
+	<body>
+		<div class="container left">
+			<div class="back-nav"></div>
+			<div class="header center orange">
+				<h2 class="padding20 white">Gas Fitters Job</h2>
+				<p class="light-orange strong">Posted: 3 Jul 2014</p>
+			</div>
+			<div class="subheader">
+				<div class="btn-group center" role="group">
+					<button type="button" class="btn btn-default btn-active">Businesses</button>
+					<button type="button" class="btn btn-default">Job Details</button>
+				</div>
+			</div>
+			<div class="content left">
+				<h1>3 Connected Businesses</h1>
+				
+				<ul id='container-elements'></ul>
+				
+				<div class="left clear width100 margin20">
+					<div class="center">
+						<a href="#" id="btn-support" class="orange center strong light-orange">
+							<span>hipages Support</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+			<footer class="left strong">
+				<div class="left center" id="quotes">
+					<span>Get Quotes</span>
+				</div>
+				<div class="left center active" id="clipboard">
+					<span class="light-orange">My Jobs</span> 
+				</div>
+				<div class="left center" id="search">
+					<span>Directory</span>
+				</div>				
+				<div class="left center" id="list">
+					<span>Menu</span>
+				</div>
+			</footer>
+		</div>	
+
+		<script id='template' type='text/ractive'>
+			{{#each jobs}}
+				<li class="wrap-connections left">
+					<div id="icon-{{image}}" class="icon left">
+						{{#if notifications === 1}}
+							<span class="notifications white strong">{{notifications}}</span>
+						{{/if}}
+					</div>
+					<div class="left description">
+						<p class="name-employer strong">{{name}}</p>
+						<p class="name-job grey">{{(description.length > 24) ? description.substring(0,23)+'...' : description}}</p>
+						<small class="recommend grey">{{recommendations}} Recommendations</small>
+					</div>
+					<div class="right icon-next"></div>						
+				</li>
+			 {{/each}}
+		</script>
+		<script>
+			$(document).ready(function()
+			{
+				$(".btn-group > .btn").click(function(){
+					$(this).addClass("btn-active").siblings().removeClass("btn-active");
+				});
+			});
+			
+			var ractive, arrayJobs;
+			
+			arrayJobs = [
+			  { image: "plumbers-rescue", notifications: 1,  name: 'John Smith', description:"Plumbers To The Rescue", recommendations: 8 },
+			  { image: "grey-gums", notifications: 1,  name: 'Petra, Kevin', description:"Grey Gums Plumbing Services", recommendations: 1 },
+			  { image: "eg-graham", notifications: 0,  name: 'Evan Graham', description:"E. & H. Graham Plumbing", recommendations: 1 }
+			];
+			
+			ractive = new Ractive({
+			  el: 'container-elements',
+			  template: '#template',
+			  data: { 
+				jobs: arrayJobs 
+			  }
+			});
+		</script>	
+	</body>
+</html>
